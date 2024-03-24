@@ -100,6 +100,7 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 export PATH="/Users/raopengfei/riscv/bin:$PATH:/Users/raopengfei/.local/bin"
 alias dim="docker image"
 alias dc="docker-compose"
@@ -111,6 +112,7 @@ alias ll="ls -al"
 alias lal="ls -al"
 alias vim="nvim"
 alias dotfiles="~/dotfiles"
+alias brew="dotfiles/brewWithGithubToken.zsh"
 alias cdotfiles="cd ~/dotfiles"
 
 # make alt+arrow key word backward/forward
@@ -137,7 +139,7 @@ if [ -f ~/.fzf.zsh ]; then
     # set up some fzf alias
     alias gcb='git checkout $(git branch | fzf)';
     alias llf="ls -al | fzf";
-    alias cdf="cd $(ls -al | fzf)";
+    alias cdf="cd \$(ls -al | fzf)";
 fi
 
 # use vim key binding for terminal
