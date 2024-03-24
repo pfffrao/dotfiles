@@ -107,10 +107,11 @@ alias dct="docker container"
 alias dsp="docker system prune"
 alias dspa="docker system prune --all"
 alias dspv="docker system prune --volumes"
+alias ll="ls -al"
 alias lal="ls -al"
-alias ll="ls -l"
 alias vim="nvim"
-alias dotfiles="cd ~/dotfiles"
+alias dotfiles="~/dotfiles"
+alias cdotfiles="cd ~/dotfiles"
 
 # make alt+arrow key word backward/forward
 bindkey "^[^[[D" backward-word
@@ -124,7 +125,7 @@ alias gv="git difftool --tool=vimdiff"
 alias gsv="git difftool --staged --tool=vimdiff"
 alias gcm="git commit -m"
 alias gau="git add --update"
-alias gpso='git push --set-upstream origin'
+alias gpso="git push --set-upstream origin"
 
 if [ ! -f ~/.fzf.zsh ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf;
@@ -135,6 +136,8 @@ if [ -f ~/.fzf.zsh ]; then
     source ~/.fzf.zsh;
     # set up some fzf alias
     alias gcb='git checkout $(git branch | fzf)';
+    alias llf="ls -al | fzf";
+    alias cdf="cd $(ls -al | fzf)";
 fi
 
 # use vim key binding for terminal
