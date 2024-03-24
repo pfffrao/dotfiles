@@ -1,5 +1,5 @@
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH="$PATH:$(go env GOPATH)/bin"
 
 # Path to your oh-my-zsh installation.
@@ -126,7 +126,7 @@ alias gcm="git commit -m"
 alias gau="git add --update"
 alias gpso='git push --set-upstream origin'
 
-if [ -f ~/.fzf.zsh ]; then
+if [ ! -f ~/.fzf.zsh ]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf;
     ~/.fzf/install || ( echo "Failed to install fzf" && exit 1);
 fi
