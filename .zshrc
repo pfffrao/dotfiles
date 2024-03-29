@@ -101,6 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+if [[ -x $(which brew) ]]; then
+    brew update && "brew formulae updated";
+    # brew with github pat
+    alias brewgh="dotfiles/brewWithGithubToken.zsh"
+fi
+
 export PATH="/Users/raopengfei/riscv/bin:$PATH:/Users/raopengfei/.local/bin"
 alias dim="docker image"
 alias dc="docker-compose"
@@ -111,7 +117,6 @@ alias dspv="docker system prune --volumes"
 alias ll="ls -al"
 alias lal="ls -al"
 alias dotfiles="~/dotfiles"
-alias brew="dotfiles/brewWithGithubToken.zsh"
 alias cdotfiles="cd ~/dotfiles"
 
 # make alt+arrow key word backward/forward
@@ -127,9 +132,12 @@ if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
     alias gv="git difftool --tool=nvimdiff"
     alias gsv="git difftool --staged --tool=nvimdiff"
+    if [[ ! -f ~/.config/nvim/init.vim ]]; then
+        ln -s init.vim ~/.config/nvim/init.vim 
+    fi
 else
     if [[ ! -f ~/.vimrc ]]; then
-        cp .vimrc ~/.vimrc
+        ln -s .vimrc ~/.vimrc;
     fi
     alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
@@ -142,6 +150,8 @@ alias gpso="git push --set-upstream origin"
 if [[ ! -x $(which fzf) ]]; then
     if [[ -x $(which brew) ]]; then
         brew install fzf || (echo "Failed to install fzf with brew." && exit 1);
+        # Set up fzf key bindings and fuzzy completion
+        eval "$(fzf --zsh)"
     else
         git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf;
         ~/.fzf/install || ( echo "Failed to install fzf" && exit 1);
@@ -151,6 +161,8 @@ else
 fi
 
 if [[ -x $(which fzf) ]]; then
+    # Set up fzf key bindings and fuzzy completion
+    eval "$(fzf --zsh)";
     # set up some fzf alias
     alias gcb='git checkout $(git branch | fzf)';
     alias llf="ls -al | fzf";
@@ -161,5 +173,5 @@ fi
 set -o vi
 
 # override for doing pintos project
-alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:~/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
+alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
 

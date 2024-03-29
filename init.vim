@@ -55,3 +55,4 @@ filetype plugin on
 set cursorline
 
 set mouse=a
+
