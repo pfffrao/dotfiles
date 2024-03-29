@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# For Ubuntu
+apt-get update && apt-get install --yes vim neovim;
+pushd /dotfiles;
+source .bashrc;
+popd;
+echo "[ -f /dotfiles/.bashrc ] && source /dotfiles/.bashrc;" >> ~/.bashrc
+

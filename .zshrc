@@ -145,6 +145,7 @@ fi
 alias gcm="git commit -m"
 alias gau="git add --update"
 alias gpso="git push --set-upstream origin"
+alias grv="git remote -v"
 
 # Install fzf when it's not installed.
 if [[ ! -x $(which fzf) ]]; then
