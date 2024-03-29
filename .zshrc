@@ -128,6 +128,14 @@ alias gpull='git pull';
 alias gpush='git push';
 alias gs="git status"
 
+alias gcm="git commit -m"
+alias gau="git add --update"
+alias gpso="git push --set-upstream origin"
+alias grv="git remote -v"
+
+# git "logdog"
+alias gld="git log --graph --oneline --decorate"
+
 if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
     alias gv="git difftool --tool=nvimdiff"
@@ -142,10 +150,6 @@ else
     alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
 fi
-alias gcm="git commit -m"
-alias gau="git add --update"
-alias gpso="git push --set-upstream origin"
-alias grv="git remote -v"
 
 # Install fzf when it's not installed.
 if [[ ! -x $(which fzf) ]]; then
