@@ -110,7 +110,6 @@ alias dspa="docker system prune --all"
 alias dspv="docker system prune --volumes"
 alias ll="ls -al"
 alias lal="ls -al"
-alias vim="nvim"
 alias dotfiles="~/dotfiles"
 alias brew="dotfiles/brewWithGithubToken.zsh"
 alias cdotfiles="cd ~/dotfiles"
@@ -123,19 +122,35 @@ bindkey "^[^[[C" forward-word
 alias gpull='git pull';
 alias gpush='git push';
 alias gs="git status"
-alias gv="git difftool --tool=vimdiff"
-alias gsv="git difftool --staged --tool=vimdiff"
+
+if [[ -x $(which nvim) ]]; then
+    alias vim="nvim"
+    alias gv="git difftool --tool=nvimdiff"
+    alias gsv="git difftool --staged --tool=nvimdiff"
+else
+    if [[ ! -f ~/.vimrc ]]; then
+        cp .vimrc ~/.vimrc
+    fi
+    alias gv="git difftool --tool=vimdiff"
+    alias gsv="git difftool --staged --tool=vimdiff"
+fi
 alias gcm="git commit -m"
 alias gau="git add --update"
 alias gpso="git push --set-upstream origin"
 
-if [ ! -f ~/.fzf.zsh ]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf;
-    ~/.fzf/install || ( echo "Failed to install fzf" && exit 1);
+# Install fzf when it's not installed.
+if [[ ! -x $(which fzf) ]]; then
+    if [[ -x $(which brew) ]]; then
+        brew install fzf || (echo "Failed to install fzf with brew." && exit 1);
+    else
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf;
+        ~/.fzf/install || ( echo "Failed to install fzf" && exit 1);
+    fi
+else
+    echo "fzf already installed";
 fi
 
-if [ -f ~/.fzf.zsh ]; then
-    source ~/.fzf.zsh;
+if [[ -x $(which fzf) ]]; then
     # set up some fzf alias
     alias gcb='git checkout $(git branch | fzf)';
     alias llf="ls -al | fzf";
@@ -146,5 +161,5 @@ fi
 set -o vi
 
 # override for doing pintos project
-alias pintos-up="docker run -it -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
+alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:~/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
 
