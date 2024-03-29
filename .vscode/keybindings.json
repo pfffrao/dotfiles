@@ -1,0 +1,166 @@
+// Place your key bindings in this file to override the defaultsauto[]
+[
+    {
+        "key": "ctrl+c h",
+        "command": "references-view.showCallHierarchy",
+        "when": "editorHasCallHierarchyProvider"
+    },
+    {
+        "key": "shift+alt+h",
+        "command": "-references-view.showCallHierarchy",
+        "when": "editorHasCallHierarchyProvider"
+    },
+    {
+        "key": "ctrl+p d",
+        "command": "editor.action.peekDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "alt+f12",
+        "command": "-editor.action.peekDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !inReferenceSearchEditor && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+d ctrl+p",
+        "command": "editor.action.showDefinitionPreviewHover"
+    },
+    {
+        "key": "ctrl+g d",
+        "command": "editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "f12",
+        "command": "-editor.action.revealDefinition",
+        "when": "editorHasDefinitionProvider && editorTextFocus && !isInEmbeddedEditor"
+    },
+    {
+        "key": "ctrl+p f",
+        "command": "togglePeekWidgetFocus",
+        "when": "inReferenceSearchEditor || referenceSearchVisible"
+    },
+    {
+        "key": "cmd+k f2",
+        "command": "-togglePeekWidgetFocus",
+        "when": "inReferenceSearchEditor || referenceSearchVisible"
+    },
+    {
+        "key": "ctrl+k s",
+        "command": "workbench.action.openGlobalKeybindings"
+    },
+    {
+        "key": "cmd+k cmd+s",
+        "command": "-workbench.action.openGlobalKeybindings"
+    },
+    {
+        "key": "ctrl+shift+e",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "shift+cmd+e",
+        "command": "-workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.action.findInFiles"
+    },
+    {
+        "key": "shift+cmd+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "filesExplorer.findInFolder",
+        "when": "explorerResourceIsFolder && filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    {
+        "key": "shift+alt+f",
+        "command": "-filesExplorer.findInFolder",
+        "when": "explorerResourceIsFolder && filesExplorerFocus && foldersViewVisible && !inputFocus"
+    },
+    {
+        "key": "alt+k",
+        "command": "keybindings.editor.recordSearchKeys",
+        "when": "inKeybindings && inKeybindingsSearch"
+    },
+    {
+        "key": "alt+cmd+k",
+        "command": "-keybindings.editor.recordSearchKeys",
+        "when": "inKeybindings && inKeybindingsSearch"
+    },
+    {
+        "key": "ctrl+l ctrl+e",
+        "command": "cursorLineEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "-cursorLineEnd",
+        "when": "textInputFocus"
+    },
+    {
+        "key": "ctrl+v ctrl+e",
+        "command": "extension.vim_ctrl+e",
+        "when": "editorTextFocus && vim.active && vim.use<C-e> && !inDebugRepl"
+    },
+    {
+        "key": "ctrl+e",
+        "command": "-extension.vim_ctrl+e",
+        "when": "editorTextFocus && vim.active && vim.use<C-e> && !inDebugRepl"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.quickOpen"
+    },
+    {
+        "key": "cmd+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "ctrl+shift+n",
+        "command": "welcome.showNewFileEntries"
+    },
+    {
+        "key": "ctrl+alt+cmd+n",
+        "command": "-welcome.showNewFileEntries"
+    },
+    {
+        "key": "ctrl+n f",
+        "command": "explorer.newFile"
+    },
+    {
+        "key": "ctrl+n d",
+        "command": "explorer.newFolder"
+    },
+    {
+        "key": "ctrl+n t",
+        "command": "workbench.action.terminal.new",
+        "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+shift+`",
+        "command": "-workbench.action.terminal.new",
+        "when": "terminalProcessSupported || terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+a b",
+        "command": "cmake.build",
+        "when": "cmake:enableFullFeatureSet && !cmake:hideBuildCommand"
+    },
+    {
+        "key": "f7",
+        "command": "-cmake.build",
+        "when": "cmake:enableFullFeatureSet && !cmake:hideBuildCommand"
+    },
+    {
+        "key": "ctrl+a r",
+        "command": "cmake.projectStatus.launchTarget"
+    },
+    {
+        "key": "ctrl+a a",
+        "command": "C_Cpp.RunCodeAnalysisOnActiveFile"
+    }
+]
+
