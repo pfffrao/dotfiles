@@ -101,6 +101,39 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+
+function getScriptDir() {
+	# Get the directory of the current script being run and set the variable SCRIPT_PATH to it.
+	# Credit to: https://stackoverflow.com/a/179231
+	# It works for all versions, including
+	# when called via multiple depth soft link,
+	# when the file it
+	# when script called by command "source" aka . (dot) operator.
+	# when arg $0 is modified from caller.
+	# "./script"
+	# "/full/path/to/script"
+	# "/some/path/../../another/path/script"
+	# "./some/folder/script"
+
+	pushd . > '/dev/null';
+	SCRIPT_PATH="${${(%):-%x}:-$0}";
+	# echo "initial SCRIPT_PATH: ${SCRIPT_PATH}";
+
+	while [ -h "$SCRIPT_PATH" ];
+	do
+	    cd "$( dirname -- "$SCRIPT_PATH"; )";
+	    SCRIPT_PATH="$( readlink -f -- "$SCRIPT_PATH"; )";
+            # echo "SCRIPT_PATH updated to: ${SCRIPT_PATH}";
+	done
+
+	cd "$( dirname -- "$SCRIPT_PATH"; )" > '/dev/null';
+	SCRIPT_PATH="$( pwd; )";
+	# echo "Final SCRIPT_PATH: ${SCRIPT_PATH}";
+	popd  > '/dev/null';
+}
+
+getScriptDir;
+echo "Executing .zshrc under ${SCRIPT_PATH}"
 if [[ -x $(which brew) ]]; then
     brew update && "brew formulae updated";
     # brew with github pat
@@ -141,12 +174,10 @@ if [[ -x $(which nvim) ]]; then
     alias gv="git difftool --tool=nvimdiff"
     alias gsv="git difftool --staged --tool=nvimdiff"
     if [[ ! -f ~/.config/nvim/init.vim ]]; then
-        ln -s init.vim ~/.config/nvim/init.vim 
+	    mkdir -p ~/.config/nvim;
+	    ln -s ${SCRIPT_PATH}/init.vim ~/.config/nvim/init.vim 
     fi
 else
-    if [[ ! -f ~/.vimrc ]]; then
-        ln -s .vimrc ~/.vimrc;
-    fi
     alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
 fi
@@ -174,9 +205,28 @@ if [[ -x $(which fzf) ]]; then
     alias cdf="cd \$(ls -al | fzf)";
 fi
 
+# link .vimrc
+if [[ ! -f ~/.vimrc ]]; then
+    ln -s ${SCRIPT_PATH}/.vimrc ~/.vimrc
+fi
+
+# Install vim-plug for neovim and vim (compatible on UNIX and Linux systems)
+if [[ ! -f ${XDG_DATA_HOME:-$HOME/.local/share} ]]; then
+    echo "installing vim-plug for neovim"
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+
+if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
+    echo "installing vim-plug for vim"
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
+
 # use vim key binding for terminal
 set -o vi
 
 # override for doing pintos project
 alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
 
+cd;
