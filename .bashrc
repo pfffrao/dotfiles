@@ -1,3 +1,38 @@
+#/bin/bash
+
+function getScriptDir() {
+	# Get the directory of the current script being run and set the variable SCRIPT_PATH to it.
+	# Credit to: https://stackoverflow.com/a/179231
+	# It works for all versions, including
+	# when called via multiple depth soft link,
+	# when the file it
+	# when script called by command "source" aka . (dot) operator.
+	# when arg $0 is modified from caller.
+	# "./script"
+	# "/full/path/to/script"
+	# "/some/path/../../another/path/script"
+	# "./some/folder/script"
+
+	pushd . > '/dev/null';
+	SCRIPT_PATH="${BASH_SOURCE[0]:-$0}";
+	# echo "initial SCRIPT_PATH: ${SCRIPT_PATH}";
+
+	while [ -h "$SCRIPT_PATH" ];
+	do
+	    cd "$( dirname -- "$SCRIPT_PATH"; )";
+	    SCRIPT_PATH="$( readlink -f -- "$SCRIPT_PATH"; )";
+            #echo "SCRIPT_PATH updated to: ${SCRIPT_PATH}";
+	done
+
+	cd "$( dirname -- "$SCRIPT_PATH"; )" > '/dev/null';
+	SCRIPT_PATH="$( pwd; )";
+	# echo "Final SCRIPT_PATH: ${SCRIPT_PATH}";
+	popd  > '/dev/null';
+}
+
+getScriptDir;
+echo "Executing .bashrc under ${SCRIPT_PATH}"
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 if [[ -x $(which go) ]]; then
@@ -28,19 +63,33 @@ alias grv="git remote -v"
 # git "logdog"
 alias gld="git log --graph --oneline --decorate"
 
+export PATH="$PATH:/opt/nvim-linux64/bin"
+
+if [[ ! -x $(which nvim) ]]; then
+	# install neovim
+	# Install from pre-built archives
+	# Reference: https://github.com/neovim/neovim/blob/master/INSTALL.md#pre-built-archives-2
+	apt-get install curl tar;
+	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+	rm -rf /opt/nvim
+	tar -C /opt -xzf nvim-linux64.tar.gz
+fi
+
 if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
     alias gv="git difftool --tool=nvimdiff"
-    alias gsv="git difftool --staged --tool=nvimdiff"
+    alias gsv="git difftool --staged --tool=vimdiff"
     if [[ ! -f ~/.config/nvim/init.vim ]]; then
-        ln -s init.vim ~/.config/nvim/init.vim 
+	    mkdir -p ~/.config/nvim;
+	    ln -s ${SCRIPT_PATH}/init.vim ~/.config/nvim/init.vim 
     fi
 else
-    if [[ ! -f ~/.vimrc ]]; then
-        ln -s .vimrc ~/.vimrc
-    fi
     alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
+fi
+
+if [[ ! -f ~/.vimrc ]]; then
+    ln -s ${SCRIPT_PATH}/.vimrc ~/.vimrc
 fi
 
 # Install fzf when it's not installed.
@@ -64,6 +113,19 @@ if [[ -x $(which fzf) ]]; then
     alias gcb='git checkout $(git branch | fzf)';
     alias llf="ls -al | fzf";
     alias cdf="cd \$(ls -al | fzf)";
+fi
+
+# Install vim-plug for neovim and vim (compatible on UNIX and Linux systems)
+if [[ ! -f ${XDG_DATA_HOME:-$HOME/.local/share} ]]; then
+    echo "installing vim-plug for neovim"
+    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
+
+if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
+    echo "installing vim-plug for vim"
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
 # use vim key binding for terminal

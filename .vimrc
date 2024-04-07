@@ -27,4 +27,35 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
- 
+
+" color schemes
+if (has("termguicolors"))
+         set termguicolors
+endif
+
+syntax enable
+
+" Vim jump to the last position when reopening a file
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+" copy and paste into the system clipboard
+nmap <C-p> "+p
+vmap <C-y> "+y
+
+set mouse=a
+
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+ " Plugin Section
+ Plug 'dracula/vim', { 'as': 'dracula' }
+ Plug 'mhinz/vim-startify'
+ " Install the comment.nvim (step 1)
+ Plug 'numToStr/Comment.nvim'
+call plug#end()
+
+colorscheme dracula
+
