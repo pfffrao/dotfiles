@@ -77,7 +77,7 @@ fi
 
 if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
-    alias gv="git difftool --tool=nvimdiff"
+    alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
     if [[ ! -f ~/.config/nvim/init.vim ]]; then
 	    mkdir -p ~/.config/nvim;
