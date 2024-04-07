@@ -56,6 +56,7 @@ alias gpush='git push';
 alias gs="git status"
 
 alias gcm="git commit -m"
+alias gca="git commit --amend"
 alias gau="git add --update"
 alias gpso="git push --set-upstream origin"
 alias grv="git remote -v"

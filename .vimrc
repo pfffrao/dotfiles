@@ -49,6 +49,8 @@ set mouse=a
 
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
+" Run :PlugUpdate to update the plugins. After the update is finished, you can 
+" review the changes by pressing D in the window. Or you can do it later by running :PlugDiff.
 call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
  " Plugin Section
  Plug 'dracula/vim', { 'as': 'dracula' }
