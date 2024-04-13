@@ -169,6 +169,13 @@ alias grv="git remote -v"
 # git "logdog"
 alias gld="git log --graph --oneline --decorate"
 
+# aliases for cd to upper directories
+alias .1=cd ..
+alias .2=cd ../../
+alias .3=cd ../../..
+alias .4=cd ../../../..
+alias .5=cd ../../../../..
+
 if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
     alias gv="git difftool --tool=nvimdiff"

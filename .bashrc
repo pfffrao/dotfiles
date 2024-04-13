@@ -64,6 +64,13 @@ alias grv="git remote -v"
 # git "logdog"
 alias gld="git log --graph --oneline --decorate"
 
+# aliases for cd to upper directories
+alias .1=cd ..
+alias .2=cd ../../
+alias .3=cd ../../..
+alias .4=cd ../../../..
+alias .5=cd ../../../../..
+
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
 if [[ ! -x $(which nvim) ]]; then
@@ -112,17 +119,17 @@ NVIM_PLUG_PATH="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vi
 echo "Try Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
 if [[ ! -f ${NVIM_PLUG_PATH} ]]; then
     echo "Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
-    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+    curl -fLo ${NVIM_PLUG_PATH} --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
 else
     echo "vim-plug seems already installed for nvim";
 fi
 
-VIM_PLUG_PATH="~/.vim/autoload/plug.vim";
+VIM_PLUG_PATH="${HOME}/.vim/autoload/plug.vim";
 echo "Try Installing vim-plug for vim at ${VIM_PLUG_PATH} ]";
 if [[ ! -f ${VIM_PLUG_PATH} ]]; then
     echo "Installing vim-plug for vim at ${VIM_PLUG_PATH}";
-    curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs \
+    curl -fLo ${VIM_PLUG_PATH} --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
 else
     echo "vim-plug seems already installed for vim";
