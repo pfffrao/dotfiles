@@ -77,7 +77,7 @@ if [[ ! -x $(which nvim) ]]; then
 fi
 
 if [[ -x $(which nvim) ]]; then
-    alias vim="nvim"
+    alias nv="nvim"
     alias gv="git difftool --tool=vimdiff"
     alias gsv="git difftool --staged --tool=vimdiff"
     if [[ ! -f ~/.config/nvim/init.vim ]]; then
@@ -107,28 +107,41 @@ else
     echo "fzf already installed";
 fi
 
+# Install vim-plug for neovim and vim (compatible on UNIX and Linux systems)
+NVIM_PLUG_PATH="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim;
+echo "Try Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
+if [[ ! -f ${NVIM_PLUG_PATH} ]]; then
+    echo "Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
+    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
+else
+    echo "vim-plug seems already installed for nvim";
+fi
+
+VIM_PLUG_PATH="~/.vim/autoload/plug.vim";
+echo "Try Installing vim-plug for vim at ${VIM_PLUG_PATH} ]";
+if [[ ! -f ${VIM_PLUG_PATH} ]]; then
+    echo "Installing vim-plug for vim at ${VIM_PLUG_PATH}";
+    curl -fLo ${HOME}/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
+else
+    echo "vim-plug seems already installed for vim";
+fi
+
+# Set up fzf key bindings and fuzzy completion
+# This needs to be executed at the end of bashrc.
 if [[ -x $(which fzf) ]]; then
-    # Set up fzf key bindings and fuzzy completion
-    eval "$(fzf --zsh)";
+    eval "$(fzf --bash)";
+fi
+
+# use vim key binding for terminal
+set -o vi
+
+echo "setting up fzf aliases for bash";
+if [[ -x $(which fzf) ]]; then
     # set up some fzf alias
     alias gcb='git checkout $(git branch | fzf)';
     alias llf="ls -al | fzf";
     alias cdf="cd \$(ls -al | fzf)";
 fi
-
-# Install vim-plug for neovim and vim (compatible on UNIX and Linux systems)
-if [[ ! -f ${XDG_DATA_HOME:-$HOME/.local/share} ]]; then
-    echo "installing vim-plug for neovim"
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-fi
-
-if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
-    echo "installing vim-plug for vim"
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-fi
-
-# use vim key binding for terminal
-set -o vi
 
