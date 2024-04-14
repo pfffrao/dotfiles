@@ -39,7 +39,7 @@ if [[ -x $(which go) ]]; then
     export PATH="$PATH:$(go env GOPATH)/bin"
 fi
 
-alias dim="docker image"
+alias di="docker image"
 alias dc="docker-compose"
 alias dct="docker container"
 alias dsp="docker system prune"
@@ -142,7 +142,7 @@ if [[ -x $(which fzf) ]]; then
 fi
 
 # use vim key binding for terminal
-set -o vi
+set -o vi;
 
 echo "setting up fzf aliases for bash";
 if [[ -x $(which fzf) ]]; then

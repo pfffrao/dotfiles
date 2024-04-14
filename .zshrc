@@ -141,7 +141,7 @@ if [[ -x $(which brew) ]]; then
 fi
 
 export PATH="/Users/raopengfei/riscv/bin:$PATH:/Users/raopengfei/.local/bin"
-alias dim="docker image"
+alias di="docker image"
 alias dc="docker-compose"
 alias dct="docker container"
 alias dsp="docker system prune"
@@ -175,6 +175,11 @@ alias .2="cd ../../"
 alias .3="cd ../../.."
 alias .4="cd ../../../.."
 alias .5="cd ../../../../.."
+
+# for convenience of refreshing zshrc
+alias sz="source ~/.zshrc";
+alias mydotfiles="cd ~/dotfiles";
+alias vimzshrc="vim ~/dotfiles/.zshrc";
 
 if [[ -x $(which nvim) ]]; then
     alias vim="nvim"
@@ -218,22 +223,32 @@ if [[ ! -f ~/.vimrc ]]; then
 fi
 
 # Install vim-plug for neovim and vim (compatible on UNIX and Linux systems)
-if [[ ! -f ${XDG_DATA_HOME:-$HOME/.local/share} ]]; then
-    echo "installing vim-plug for neovim"
-    sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+NVIM_PLUG_PATH="${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim;
+echo "Try Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
+if [[ ! -f ${NVIM_PLUG_PATH} ]]; then
+    echo "Installing vim-plug for neovim at ${NVIM_PLUG_PATH}";
+    curl -fLo ${NVIM_PLUG_PATH} --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
+else
+    echo "vim-plug seems already installed for nvim";
 fi
 
-if [[ ! -f ~/.vim/autoload/plug.vim ]]; then
-    echo "installing vim-plug for vim"
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+VIM_PLUG_PATH="${HOME}/.vim/autoload/plug.vim";
+echo "Try Installing vim-plug for vim at ${VIM_PLUG_PATH} ]";
+if [[ ! -f ${VIM_PLUG_PATH} ]]; then
+    echo "Installing vim-plug for vim at ${VIM_PLUG_PATH}";
+    curl -fLo ${VIM_PLUG_PATH} --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim;
+else
+    echo "vim-plug seems already installed for vim";
 fi
+
+
 
 # use vim key binding for terminal
 set -o vi
 
 # override for doing pintos project
-alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
+alias pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/PKU-OS/pintos:/pintos pkuflyingpig/pintos bash"
+alias gy-pintos-up="docker run -it --rm -v /Users/raopengfei/dotfiles/:/dotfiles -v /Users/raopengfei/Desktop/StanfordPintos/pintos:/pintos pkuflyingpig/pintos bash"
 
-cd;
