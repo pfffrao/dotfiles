@@ -40,7 +40,7 @@ if [[ -x $(which go) ]]; then
 fi
 
 alias di="docker image"
-alias dc="docker-compose"
+alias dc="docker compose"
 alias dct="docker container"
 alias dsp="docker system prune"
 alias dspa="docker system prune --all"
@@ -156,3 +156,10 @@ if [ ! -f ~/.bashrc.done ]; then
     echo "[[ -f ~/dotfiles/.bashrc ]] && source ~/dotfiles/.bashrc;" >> ~/.bashrc
     touch ~/.bashrc.done;
 fi
+
+if [ -f ~/dotfiles/.vscode/keybindings.json ]; then
+    echo "Coping vscode key bindings";
+    mkdir -p ~/.config/Code/User/;
+    cp ~/dotfiles/.vscode/keybindings.json ~/.config/Code/User/;
+fi
+

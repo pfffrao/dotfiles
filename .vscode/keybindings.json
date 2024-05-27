@@ -161,6 +161,14 @@
     {
         "key": "ctrl+a a",
         "command": "C_Cpp.RunCodeAnalysisOnActiveFile"
+    },
+    {
+        "key": "ctrl+alt+.",
+        "command": "workbench.action.positionPanelRight"
+    },
+    {
+        "key": "ctrl+alt+,",
+        "command": "workbench.action.positionPanelLeft"
     }
 ]
 
