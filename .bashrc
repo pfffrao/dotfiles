@@ -77,7 +77,7 @@ if [[ ! -x $(which nvim) ]]; then
 	# install neovim
 	# Install from pre-built archives
 	# Reference: https://github.com/neovim/neovim/blob/master/INSTALL.md#pre-built-archives-2
-	apt-get install curl tar;
+	sudo apt-get install curl tar;
 	curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
 	rm -rf /opt/nvim
 	tar -C /opt -xzf nvim-linux64.tar.gz
@@ -152,3 +152,7 @@ if [[ -x $(which fzf) ]]; then
     alias cdf="cd \$(ls -al | fzf)";
 fi
 
+if [ ! -f ~/.bashrc.done ]; then
+    echo "[[ -f ~/dotfiles/.bashrc ]] && source ~/dotfiles/.bashrc;" >> ~/.bashrc
+    touch ~/.bashrc.done;
+fi
