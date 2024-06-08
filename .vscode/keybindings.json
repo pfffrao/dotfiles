@@ -171,6 +171,23 @@
         "key": "ctrl+k l",
         "command": "views.moveViewRight",
         "when": "focusedView != ''"
+    },
+	{
+		"key": "ctrl+meta+right",
+		"command": "workbench.action.moveEditorToNextGroup"
+	},
+	{
+		"key": "ctrl+meta+left",
+		"command": "workbench.action.moveEditorToPreviousGroup"
+	},
+    {
+        "key": "ctrl+f",
+        "command": "actions.find",
+        "when": "editorFocus || editorIsOpen"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "workbench.action.findInFiles"
     }
 ]
 
